@@ -128,6 +128,23 @@ export default new Vuex.Store({
 					commit("throwError", error);
 				});
 		},
+		async folderDownload({ commit }, path) {
+			await ax
+				.get(`${download_url}?path=${path}`, {
+					headers: {
+						Accept: "application/json",
+						Authorization: token,
+					},
+				})
+				.then((res) => {
+					if (res.status === 200) {
+						window.open(res.data.href);
+					}
+				})
+				.catch((error) => {
+					commit("throwError", error);
+				});
+		},
 		selectImg({}, { url, name, selectedImg }) {
 			const ext = name.split(".")[name.split(".").length - 1];
 			if (exts.includes(ext)) {
