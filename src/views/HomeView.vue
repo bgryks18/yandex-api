@@ -7,10 +7,11 @@
               size="sm"
               text="Button"
               variant="success"
+              @click="goToNewFolder(getPrevious)"
               ><i class="fas fa-arrow-left"></i>Geri</b-button
             >
           </b-input-group>
-        <span>disk:/</span>
+        <span>{{getCurrent}}</span>
       </div>
       <b-table
         :items="getDataFromState"
@@ -24,6 +25,39 @@
         :current-page="currentPage"
         empty-text="Burayı yapan çok tembel, hiçbir şey yüklememiş!"
       >
+        <template #cell(name)="data">
+          <b-link
+            @dblclick="goToNewFolder(data.item.path)"
+            v-if="data.item.type === 'dir'"
+            ><i class="fas fa-folder-open file-icon"></i>&nbsp;{{
+              data.item.name
+            }}</b-link
+          >
+          <b-link
+            v-else
+            ><i class="fas fa-file"></i>&nbsp;{{ data.item.name }}</b-link
+          >
+        </template>
+
+        <template #cell(path)="data">
+          <span v-html="folderData(data.item.path)" class="folders"></span>
+        </template>
+        <template #cell(file)="data">
+          <span v-if="data.item.type !== 'dir'"
+            ><b-link :href="data.item.file"
+              ><i class="fas fa-download"></i>&nbsp;İndir:{{
+                data.item.name
+              }}</b-link
+            ></span
+          >
+          <span v-else>
+            <b-link href="#" @click="goFolderDownload(data.item.path)"
+              ><i class="fas fa-download"></i>&nbsp;Zip olarak indir:{{
+                data.item.name
+              }}</b-link
+            >
+          </span>
+        </template>
       </b-table>
 
       <b-pagination
@@ -54,5 +88,32 @@
         "getDefaultPage",
       ]),
     },
+    methods:{
+      folderData(value) {
+      const arr = value.split("/");
+      let content = "";
+      arr.forEach((item, index) => {
+        if (index === value.split("/").length - 1) {
+          content +=
+            `<span>` +
+            "&nbsp;".repeat(index) +
+            `<i class="far fa-file"></i>${item}<br/></span>`;
+        } else {
+          content +=
+            `<span>` +
+            "&nbsp;".repeat(index) +
+            `<i class="fas fa-folder-open"></i>${item}<br/></span>`;
+          }
+          });
+      return content;
+      },
+      goToNewFolder(path) {
+        const count = this.folderNumber;
+        this.$store.dispatch("getData", path);
+      },
+      goFolderDownload(path) {
+        this.$store.dispatch("folderDownload", path);
+      },
+      }
   }
 </script>
