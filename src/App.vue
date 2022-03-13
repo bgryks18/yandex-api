@@ -3,3 +3,6 @@
     <router-view/>
   </div>
 </template>
+<style>
+@import "./style/style.min.css";
+</style>
