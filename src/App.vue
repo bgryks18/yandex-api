@@ -15,10 +15,10 @@ import {mapGetters} from 'vuex'
 export default {
   name:"App",
   created(){
-    console.log("created")
+    this.$store.dispatch("getData");
   },
   computed:{
-    ...mapGetters(["isLoading"])
+    ...mapGetters(["isLoading","isError"])
   }
 }
 </script>
