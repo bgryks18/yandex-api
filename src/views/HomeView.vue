@@ -2,20 +2,14 @@
   <div class="home py-5">
     <b-container>
       <div class="mb-1 p-2">
-        <b-input-group
-          class="mb-3"
-          type="number"
-          min="1"
-        >
-          <b-input-group-prepend>
+          <b-input-group>
             <b-button
               size="sm"
               text="Button"
               variant="success"
               ><i class="fas fa-arrow-left"></i>Geri</b-button
             >
-          </b-input-group-prepend>
-        </b-input-group>
+          </b-input-group>
         <span>disk:/</span>
       </div>
       <b-table
