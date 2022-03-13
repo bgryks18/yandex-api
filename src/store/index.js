@@ -109,6 +109,7 @@ export default new Vuex.Store({
 			} else {
 				commit("setPrevious", state.defaultPage);
 			}
+			commit("setCurrent",path)
 			await ax
 				.get(data_url, {
 					headers: {
