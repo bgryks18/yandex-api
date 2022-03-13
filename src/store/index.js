@@ -39,7 +39,36 @@ export default new Vuex.Store({
 		}
 	},
 	mutations: {
+		moveDataToState(state, payload) {
+			state.files = payload;
+			state.loading = false;
+		},
+		throwError(state, error) {
+			state.error = error;
+			state.loading = false;
+		}
   },
 	actions: {
+		async getData({ state, commit }, path = state.defaultPage) {
+			if (state.loading !== true) {
+				state.loading = true;
+			}
+			await ax
+				.get(data_url, {
+					headers: {
+						Accept: "application/json",
+						Authorization: token,
+					},
+					params: {
+						path,
+					},
+				})
+				.then((res) => {
+					commit("moveDataToState", res.data._embedded.items);
+				})
+				.catch((error) => {
+					commit("throwError", error);
+				});
+		},
   },
 });
