@@ -36,7 +36,38 @@ export default new Vuex.Store({
 		},
 		getDefaultPage(state) {
 			return state.defaultPage;
-		}
+		},
+		getFields() {
+			return [
+				{
+					key: "name",
+					label: "Dosya",
+					sortable: true,
+					sortDirection: "desc",
+				},
+				{
+					key: "created",
+					label: "Oluşturulma Tarihi",
+					sortable: true,
+					sortDirection: "desc",
+					formatter: (value) => {
+						return (
+							value.split("T")[0].split("-")[2] +
+							"/" +
+							value.split("T")[0].split("-")[1] +
+							"/" +
+							value.split("T")[0].split("-")[0] +
+							"\nSaat: " +
+							value.split("T")[1].split("+")[0]
+						);
+					},
+				},
+				{
+					key: "file",
+					label: "İndir",
+				},
+			];
+		},
 	},
 	mutations: {
 		moveDataToState(state, payload) {

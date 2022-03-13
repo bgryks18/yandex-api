@@ -15,7 +15,7 @@
       <b-table
         :items="getDataFromState"
         stacked="md"
-        :fields="[]"
+        :fields="getFields"
         show-empty
         small
         class="files-table shadow"
@@ -48,6 +48,7 @@
     computed: {
       ...mapGetters([
         "getDataFromState",
+        "getFields",
         "getPrevious",
         "getCurrent",
         "getDefaultPage",
