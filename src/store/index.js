@@ -77,12 +77,37 @@ export default new Vuex.Store({
 		throwError(state, error) {
 			state.error = error;
 			state.loading = false;
-		}
+		},
+		setPrevious(state, path) {
+			state.previous = path;
+		},
+		setCurrent(state, path) {
+			state.current = path;
+		},
   },
 	actions: {
 		async getData({ state, commit }, path = state.defaultPage) {
 			if (state.loading !== true) {
 				state.loading = true;
+			}
+			if (path !== state.defaultPage) {
+				let newPathArr = path.split("/");
+				newPathArr.pop();
+				let newPath = "";
+				newPathArr.forEach((item, index) => {
+					if (newPathArr.length - 1 === index) {
+						newPath += item;
+					} else {
+						newPath += item + "/";
+					}
+				});
+				if (newPath.split("/").length === 1) {
+					commit("setPrevious", state.defaultPage);
+				} else {
+					commit("setPrevious", newPath);
+				}
+			} else {
+				commit("setPrevious", state.defaultPage);
 			}
 			await ax
 				.get(data_url, {

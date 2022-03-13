@@ -8,6 +8,7 @@
               text="Button"
               variant="success"
               @click="goToNewFolder(getPrevious)"
+              v-if="getCurrent!==getDefaultPage"
               ><i class="fas fa-arrow-left"></i>Geri</b-button
             >
           </b-input-group>
