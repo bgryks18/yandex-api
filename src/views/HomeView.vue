@@ -1,5 +1,6 @@
 <template>
   <div class="home py-5">
+    <image-modal :selectedImg="selectedImg"></image-modal>
     <b-container>
       <div class="mb-1 p-2">
           <b-input-group>
@@ -35,6 +36,13 @@
             }}</b-link
           >
           <b-link
+            v-b-modal.modalbox
+            @click="
+              selectImg({
+                url: data.item.preview,
+                name: data.item.name,
+                selectedImg,
+              })"
             v-else
             ><i class="fas fa-file"></i>&nbsp;{{ data.item.name }}</b-link
           >
@@ -72,14 +80,20 @@
   </div>
 </template>
 <script>
-  import {mapGetters} from 'vuex'
+  import {mapGetters,mapActions} from 'vuex'
+  import imageModal from '../components/imageModal.vue'
   export default {
     data() {
       return {
         perPage: 8,
         currentPage: 1,
+        selectedImg:{
+          url: null,
+          name: null
+        }
       }
     },
+    components:{imageModal},
     computed: {
       ...mapGetters([
         "getDataFromState",
@@ -90,6 +104,7 @@
       ]),
     },
     methods:{
+      ...mapActions(["selectImg"]),
       folderData(value) {
       const arr = value.split("/");
       let content = "";

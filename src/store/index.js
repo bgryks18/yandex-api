@@ -8,6 +8,7 @@ Vue.use(Vuex);
 const data_url = `https://cloud-api.yandex.net/v1/disk/resources`;
 const download_url = `https://cloud-api.yandex.net/v1/disk/resources/download`;
 const token = process.env.VUE_APP_TOKEN; // yandexten alınan token
+const exts = ["png", "jpg", "jpeg", "gif", "docx"]; // açılır pencerede görüntülenebilecek resim dosya uzantıları
 
 export default new Vuex.Store({
 	state: {
@@ -84,7 +85,7 @@ export default new Vuex.Store({
 		setCurrent(state, path) {
 			state.current = path;
 		},
-  },
+  	},
 	actions: {
 		async getData({ state, commit }, path = state.defaultPage) {
 			if (state.loading !== true) {
@@ -126,6 +127,15 @@ export default new Vuex.Store({
 				.catch((error) => {
 					commit("throwError", error);
 				});
+		},
+		selectImg({}, { url, name, selectedImg }) {
+			const ext = name.split(".")[name.split(".").length - 1];
+			if (exts.includes(ext)) {
+				selectedImg.url = url;
+			} else if (selectedImg.url) {
+				selectedImg.url = null;
+			}
+			selectedImg.name = name;
 		},
   },
 });
