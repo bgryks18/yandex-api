@@ -13,7 +13,7 @@
         <span>disk:/</span>
       </div>
       <b-table
-        :items="items"
+        :items="getDataFromState"
         stacked="md"
         :fields="[]"
         show-empty
@@ -28,7 +28,7 @@
 
       <b-pagination
         v-model="currentPage"
-        :total-rows="rows"
+        :total-rows="getDataFromState.length"
         :per-page="perPage"
         align="center"
         class="shadow"
@@ -37,28 +37,21 @@
   </div>
 </template>
 <script>
+  import {mapGetters} from 'vuex'
   export default {
     data() {
       return {
-        perPage: 3,
+        perPage: 8,
         currentPage: 1,
-        items: [
-          { id: 1, first_name: 'Fred', last_name: 'Flintstone' },
-          { id: 2, first_name: 'Wilma', last_name: 'Flintstone' },
-          { id: 3, first_name: 'Barney', last_name: 'Rubble' },
-          { id: 4, first_name: 'Betty', last_name: 'Rubble' },
-          { id: 5, first_name: 'Pebbles', last_name: 'Flintstone' },
-          { id: 6, first_name: 'Bamm Bamm', last_name: 'Rubble' },
-          { id: 7, first_name: 'The Great', last_name: 'Gazzoo' },
-          { id: 8, first_name: 'Rockhead', last_name: 'Slate' },
-          { id: 9, first_name: 'Pearl', last_name: 'Slaghoople' }
-        ]
       }
     },
     computed: {
-      rows() {
-        return this.items.length
-      }
-    }
+      ...mapGetters([
+        "getDataFromState",
+        "getPrevious",
+        "getCurrent",
+        "getDefaultPage",
+      ]),
+    },
   }
 </script>
