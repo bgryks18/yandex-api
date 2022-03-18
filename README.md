@@ -11,6 +11,11 @@ Bu, yandex disk dosyalarınızı api aracılığıyla web sayfanızda göstermen
      /store/index.js
 içindeki token bilgisine kendi token bilginizi girin.
 
+## Uygulamayı Başlatın
+    npm start
+ ile projeyi başlatın.
+Ana dizininizdeki klasörler ve dosyalar listelenecektir. Klasörlerin içine girmek klasörün isminin üzerine gelip çift tıklayın resimleri görüntülemek resmin isminin üzerine gelip tek tıklayın. İndirmek için ise indirme linklerini kullanın. Dosyalar tek indirilir, klasörler zip olarak indirilir.
+
 ## Token Alma
 Yandex disk dosyalarımıza erişmek için token almak gerekir. 
 - Yandex hesabınıza girdikten sonra şu adrese girin: https://yandex.com/dev/disk/poligon/
